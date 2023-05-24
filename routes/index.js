@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-let latLang = {};
+let latLang = [];
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -9,11 +9,18 @@ router.get("/", function (req, res, next) {
 
 router.post("/location", function (req, res, next) {
   console.log(req.body);
-  latLang.Latitude = req.body.Latitude;
-  latLang.Longitude = req.body.Longitude;
-  latLang.LastCommunication = req.body.LastCommunication;
-  latLang.Status = req.body.Status;
-  res.status(200).send("");
+
+  let snLatLng = {};
+  snLatLng.SN = req.body.SN;
+  snLatLng.Latitude = req.body.Latitude;
+  snLatLng.Longitude = req.body.Longitude;
+  snLatLng.LastCommunication = req.body.LastCommunication;
+  snLatLng.Status = req.body.Status;
+  if (latLang.length > 0) {
+    latLang.pop();
+  }
+  latLang.push(snLatLng);
+  res.status(200).send("success");
 });
 
 module.exports = router;
